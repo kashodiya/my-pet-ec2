@@ -1,5 +1,12 @@
 # Copy this file to terraform.tfvars and update with your values
+
+# Required values
 subnet_id = "subnet-xxxxxxxxxxxxxxxxx"
 allowed_ips = ["x.x.x.x/32", "y.y.y.y/32"]
 openhands_litellm_key = "your-litellm-api-key"
 openhands_vscode_token = "your-vscode-connection-token"
+
+# Optional values (defaults shown)
+# instance_type = "m5.xlarge"
+# ami_id = "ami-08a0d1e16fc3f61ea"  # Amazon Linux 2 AMI
+# root_volume_size = 80

@@ -18,7 +18,7 @@ This project creates an EC2 server on AWS for development and experimentation pu
 
 ## Infrastructure Components
 
-- **EC2 Instance**: Amazon Linux 2 AMI on m5.xlarge with 80GB storage
+- **EC2 Instance**: Configurable instance type (default: m5.xlarge), AMI (default: Amazon Linux 2), and storage size (default: 80GB)
 - **Security Group**: Configured for SSH (port 22), HTTP (port 80), application ports (3000-7000), and OpenHands ports (30000-60000)
 - **IAM Role**: With permissions for SSM, CloudWatch, and AWS Bedrock
 - **Elastic IP**: For consistent access to the instance
@@ -29,10 +29,17 @@ This project creates an EC2 server on AWS for development and experimentation pu
 1. Clone this repository
 2. Navigate to the terraform directory
 3. Copy `terraform.tfvars.example` to `terraform.tfvars` and update with your values:
+   
+   Required values:
    - `subnet_id`: Your subnet ID (the VPC ID will be automatically determined from this)
    - `allowed_ips`: List of IP addresses allowed to access the EC2 instance
    - `openhands_litellm_key`: Your LiteLLM API key
    - `openhands_vscode_token`: Your VSCode connection token
+   
+   Optional values (defaults shown):
+   - `instance_type`: EC2 instance type (default: "m5.xlarge")
+   - `ami_id`: AMI ID for the EC2 instance (default: "ami-08a0d1e16fc3f61ea", Amazon Linux 2)
+   - `root_volume_size`: Size of the root volume in GB (default: 80)
 
 4. Run `terraform init` followed by `terraform apply`
 

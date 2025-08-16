@@ -34,6 +34,24 @@ variable "openhands_vscode_token" {
   sensitive   = true
 }
 
+variable "instance_type" {
+  description = "EC2 instance type"
+  type        = string
+  default     = "m5.xlarge"
+}
+
+variable "ami_id" {
+  description = "AMI ID for the EC2 instance"
+  type        = string
+  default     = "ami-08a0d1e16fc3f61ea" # Amazon Linux 2 AMI
+}
+
+variable "root_volume_size" {
+  description = "Size of the root volume in GB"
+  type        = number
+  default     = 80
+}
+
 data "aws_subnet" "main" {
   id = var.subnet_id
 }
@@ -126,8 +144,8 @@ resource "local_file" "private_key" {
 }
 
 resource "aws_instance" "main" {
-  ami                    = "ami-08a0d1e16fc3f61ea" # Amazon Linux 2 AMI
-  instance_type          = "m5.xlarge"
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
   subnet_id              = var.subnet_id
   vpc_security_group_ids = [aws_security_group.main.id]
   key_name               = aws_key_pair.main.key_name
@@ -136,7 +154,7 @@ resource "aws_instance" "main" {
   iam_instance_profile   = aws_iam_instance_profile.main.name
 
   root_block_device {
-    volume_size = 80
+    volume_size = var.root_volume_size
     volume_type = "gp3"
   }
 
